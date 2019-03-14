@@ -14,38 +14,38 @@ public class StartLogin extends WebFrame implements ActionListener {
 	
 	private WebButton loginButton;
 	
-	WebFrame loginFrame = new WebFrame("WOMS");
+	WebFrame loginFrame = new WebFrame("WOMS"); // new窗体
 	
 	public StartLogin () {
 		
 		
-		loginFrame.setLocation(100, 100);
-		loginFrame.setSize(400,300);
+		loginFrame.setLocation(100, 100); // 初始化窗体坐标
+		loginFrame.setSize(400,300);  // 初始化窗体大小
 		
-		loginFrame.setLayout(null);
+		loginFrame.setLayout(null); // 固定窗体内组件
 		
 		
-		setDefaultCloseOperation(WebFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(WebFrame.EXIT_ON_CLOSE); // 设置窗体关闭后结束进程
 		
-		loginButton = new WebButton("Login");
-		loginButton.setBounds(150, 150, 100, 100);
+		loginButton = new WebButton("Login"); // new按钮
+		loginButton.setBounds(150, 150, 100, 100); // 初始化按钮
 		
-		loginButton.addActionListener(this);
-		loginButton.setActionCommand("successfullyLogin");
+		loginButton.addActionListener(this); // 监听StartLogin对象
+		loginButton.setActionCommand("successfullyLogin"); // 设置口令
 		
-		loginFrame.add(loginButton);
+		loginFrame.add(loginButton); // 添加按钮进窗体
 		
-		loginFrame.setVisible(true);
+		loginFrame.setVisible(true); // 可视化
 	} 
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String cmd = e.getActionCommand();
 		
-		if (cmd.equals("successfullyLogin")) {
+		if (cmd.equals("successfullyLogin")) { // 触发监听器时
 			
-			dispose();
-			new Operator();
+			loginFrame.dispose(); // 关闭当前窗口
+			new Operator(); // new管理员窗口
 			
 			
 		}
@@ -54,6 +54,6 @@ public class StartLogin extends WebFrame implements ActionListener {
 	public static void main (String[] args) {
         
 		WebLookAndFeel.install();
-		new StartLogin();
+		new StartLogin(); 
 	}
 }
