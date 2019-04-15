@@ -2,6 +2,7 @@ package frame;
 
 import com.alee.laf.button.WebButton;
 import com.alee.laf.label.WebLabel;
+import com.alee.laf.menu.WebMenu;
 import com.alee.laf.rootpane.WebFrame;
 
 public class Operator extends WebFrame{
@@ -9,18 +10,17 @@ public class Operator extends WebFrame{
 	public Operator () {
 		WebFrame operatorFrame = new WebFrame("Operator Stage");
 		
-		operatorFrame.setLocation(100, 100);
-		operatorFrame.setSize(400,300);
+		// 最大化界面
+		operatorFrame.setExtendedState(this.getExtendedState()|WebFrame.MAXIMIZED_BOTH);
 		
 		operatorFrame.setLayout(null);
 		
+		WebMenu operatorMenu = new WebMenu();
 		
-		setDefaultCloseOperation(WebFrame.EXIT_ON_CLOSE);
 		
-		WebLabel label = new WebLabel("This is operator stage.");
-		label.setBounds(50, 50, 200, 30);
 		
-		operatorFrame.add(label);
+		operatorFrame.setDefaultCloseOperation(WebFrame.EXIT_ON_CLOSE);
+		
 		
 		operatorFrame.setVisible(true);
 	}
