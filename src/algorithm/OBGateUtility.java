@@ -49,7 +49,7 @@ public class OBGateUtility {
 			}
 		});		
 		Map<String, Double> allMap = new LinkedHashMap<String, Double>();
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < list.size(); i++) {
 			allMap.put(list.get(i).getKey(), list.get(i).getValue());
 		}
 		int count = 1; // 初始化门区号

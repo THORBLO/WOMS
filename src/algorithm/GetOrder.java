@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class GetOrder {
 	
-	Map<String, Double> measureArea (List<Map<String, String>> inputList) {
+	static Map<String, Double> measureArea (List<Map<String, String>> inputList) {
 		
 		Map<String, Double> outputMap = new HashMap<String, Double>();
 		
@@ -24,7 +24,7 @@ public class GetOrder {
 		
 	}
 	
-	List<Map<String, String>> getOrder() {
+	static List<Map<String, String>> getOrder() {
 		
 		List<Map<String, String>> list = new ArrayList<Map<String,String>>();
 			
