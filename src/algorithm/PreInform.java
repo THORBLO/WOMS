@@ -10,12 +10,16 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.print.attribute.standard.ReferenceUriSchemesSupported;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 public class PreInform {
 	
 	static void inform () {
+		
+		//获取当日的规划，解码成List格式后，进行插入数据库操作
 		
         SimpleDateFormat sdf = new SimpleDateFormat();// 格式化时间 
         sdf.applyPattern("yyyy-MM-dd");  
@@ -97,6 +101,8 @@ public class PreInform {
 	static String getStore (String order) {
 		
 		String store = null;
+		int mile;
+		String onWayTime = null;
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -112,9 +118,9 @@ public class PreInform {
 		{
 			String sql = "SELECT * FROM order_info WHERE order_id = '" + order + "'";
 			ResultSet rs = stmt.executeQuery(sql);
-			while (rs.next()) {
-				store = rs.getString(2);
-			}
+			rs.next();
+			store = rs.getString(2);
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

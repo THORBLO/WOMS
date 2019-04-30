@@ -20,6 +20,8 @@ public class FIFO {
 	
 	static Map<Integer, Map<String, String>> getDate (List<Map<String, String>> origin, Map<String, List> opstart) {
 		
+		//将HashMap里的订单号-面积键值对跟第一次取出的订单信息Map比对，变成订单号-日期键值对
+		
 		Map<Integer, Map<String, String>> backDateMap = new HashMap<Integer, Map<String,String>>();
 		
 		for (int i = 1; i <= opstart.size(); i++) {
@@ -43,6 +45,8 @@ public class FIFO {
 	
 	static List<String> fifoList (Map<String, String> map) {
 		
+		//按日期先后排序后，按顺序转换成列表
+		
 		List<Entry<String, String>> list = new ArrayList<Entry<String, String>>(map.entrySet());
 		Collections.sort(list, new Comparator<Map.Entry<String, String>>() {
 			public int compare(Map.Entry<String, String> o1, Map.Entry<String, String> o2) {
@@ -59,7 +63,9 @@ public class FIFO {
 		return backList;
 	}
 	
-	static void allFifo (Map<Integer, Map<String, String>> map) {
+	static List<List<String>> allFifo (Map<Integer, Map<String, String>> map) {
+		
+		//先将Map中所有门区转换成列表，再按门区顺序存入上一级列表，将整个规划列表转换成json格式，存入数据库
 		
 		List<List<String>> list = new ArrayList<List<String>>();
 		
@@ -94,8 +100,7 @@ public class FIFO {
 			e.printStackTrace();
 		}
 		
-		System.out.println(list);
-		
+		return list;
 	}
 	
 }

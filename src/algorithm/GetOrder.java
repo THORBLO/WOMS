@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class GetOrder {
 	
-	static Map<String, Double> measureArea (List<Map<String, String>> inputList) {
+	static Map<String, Double> measureArea (List<Map<String, String>> inputList) {//匹配订单号和订单面积
 		
 		Map<String, Double> outputMap = new HashMap<String, Double>();
 		
@@ -24,7 +24,7 @@ public class GetOrder {
 		
 	}
 	
-	static List<Map<String, String>> getOrder() {
+	static List<Map<String, String>> getOrder() {//得到每个订单的订单号，订单面积和下单时间
 		
 		List<Map<String, String>> list = new ArrayList<Map<String,String>>();
 			

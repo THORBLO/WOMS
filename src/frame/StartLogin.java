@@ -129,7 +129,7 @@ public class StartLogin extends WebFrame {
                 		role = "manager";
                 		if(loginStatus(name, pw, role)) {
                     		dispose();
-                    		new Operator();
+                    		//new Operator();
                 		} else {
 							messageLogin();
 						}
