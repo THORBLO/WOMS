@@ -3,51 +3,88 @@ package frame;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import com.alee.laf.desktoppane.WebInternalFrame;
 import com.alee.laf.menu.WebMenu;
 import com.alee.laf.menu.WebMenuBar;
 import com.alee.laf.menu.WebMenuItem;
+import com.alee.laf.panel.WebPanel;
 import com.alee.laf.rootpane.WebFrame;
+import com.alee.laf.tabbedpane.WebTabbedPane;
+import com.alee.laf.table.WebTable;
 import com.alee.laf.tree.WebTree;
 
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JTree;
-import javax.swing.JLabel;
-import javax.swing.ImageIcon;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 
+import java.awt.Toolkit;
+import java.beans.PropertyVetoException;
+
+import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
+import java.awt.SystemColor;
+import javax.swing.JTabbedPane;
+import javax.swing.JLayeredPane;
+import javax.swing.JTable;
+import javax.swing.JButton;
+import javax.swing.JPopupMenu;
+import java.awt.Component;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JMenuItem;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
 public class Mframe extends WebFrame {
 
-	private JPanel contentPane;
-	
-	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Mframe frame = new Mframe();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+	private void createNodes(DefaultMutableTreeNode top) {
+	    DefaultMutableTreeNode category = null;
+	    DefaultMutableTreeNode leaf = null;
+	    
+	    category = new DefaultMutableTreeNode("订单");
+	    top.add(category);
+	    
+	    //original Tutorial
+	    leaf = new DefaultMutableTreeNode("今日订单");
+	    category.add(leaf);
+	    
+	    //Tutorial Continued
+	    leaf = new DefaultMutableTreeNode("历史订单");
+	    category.add(leaf);
+	    
+	 
+	    category = new DefaultMutableTreeNode("补货");
+	    top.add(category);
+	 
+	    //VM
+	    leaf = new DefaultMutableTreeNode("亟待补货");
+	    category.add(leaf);
+	 
+	    //Language Spec
+	    leaf = new DefaultMutableTreeNode("要约反馈");
+	    category.add(leaf);
 	}
+	
+	
+	
+	private JPanel contentPane;
+	private JTable table;
+	
+	
+	
 	
 	/**
 	 * Create the frame.
 	 */
-	public Mframe() {
+	public Mframe(String mName) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage("F:\\InstallPackages\\logo\\icon.jpg"));
+		setTitle("WOMS - 管理员");
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1280, 720);
@@ -65,51 +102,66 @@ public class Mframe extends WebFrame {
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(255, 255, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 		
-		WebTree tree = new WebTree();
-		tree.setModel(new DefaultTreeModel(
-			new DefaultMutableTreeNode("订单") {
-				{
-					DefaultMutableTreeNode node_1;
-					node_1 = new DefaultMutableTreeNode("colors");
-						node_1.add(new DefaultMutableTreeNode("blue"));
-						node_1.add(new DefaultMutableTreeNode("violet"));
-						node_1.add(new DefaultMutableTreeNode("red"));
-						node_1.add(new DefaultMutableTreeNode("yellow"));
-					add(node_1);
-					node_1 = new DefaultMutableTreeNode("sports");
-						node_1.add(new DefaultMutableTreeNode("basketball"));
-						node_1.add(new DefaultMutableTreeNode("soccer"));
-						node_1.add(new DefaultMutableTreeNode("football"));
-						node_1.add(new DefaultMutableTreeNode("hockey"));
-					add(node_1);
-					node_1 = new DefaultMutableTreeNode("food");
-						node_1.add(new DefaultMutableTreeNode("hot dogs"));
-						node_1.add(new DefaultMutableTreeNode("pizza"));
-						node_1.add(new DefaultMutableTreeNode("ravioli"));
-						node_1.add(new DefaultMutableTreeNode("bananas"));
-					add(node_1);
-				}
-			}
-		));
+		WebTree tree;
+		DefaultMutableTreeNode top =
+		        new DefaultMutableTreeNode("WOMS");
+		createNodes(top);
+		tree = new WebTree(top);
+
 		tree.setFont(new Font("微软雅黑", Font.PLAIN, 15));
+
+		contentPane.setLayout(new BorderLayout(0, 0));
 		contentPane.add(tree, BorderLayout.WEST);
 		
-		JPanel panel = new JPanel();
-		panel.setBackground(new Color(255, 255, 255));
-		contentPane.add(panel, BorderLayout.NORTH);
-		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGap(0, 1252, Short.MAX_VALUE)
-		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGap(0, 83, Short.MAX_VALUE)
-		);
-		panel.setLayout(gl_panel);
+		JLabel label = new JLabel("");
+		contentPane.add(label, BorderLayout.NORTH);
+		label.setIcon(new ImageIcon("F:\\InstallPackages\\logo\\slogan.jpg"));
+		
+		WebTabbedPane tabbedPane = new WebTabbedPane(JTabbedPane.TOP);
+		contentPane.add(tabbedPane, BorderLayout.CENTER);
+		
+		WebPanel nordPanel = new WebPanel();
+		tabbedPane.addTab("今日订单", null, nordPanel, null);
+		
+		
+		table = new WebTable();
+		nordPanel.add(table);
+		
+		JPopupMenu nordPopMenu = new JPopupMenu();
+		addPopup(table, nordPopMenu);
+		
+		JMenuItem menuItem_close = new JMenuItem("关闭当前页面");
+		menuItem_close.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				tabbedPane.remove(nordPanel);
+			}
+		});
+		nordPopMenu.add(menuItem_close);
+		
+		//tabbedPane.remove(panel);
+		
+		JPanel pordPanel = new JPanel();
+		tabbedPane.addTab("历史订单", null, pordPanel, null);
+		
+		
 	}
-
+	private static void addPopup(Component component, final JPopupMenu popup) {
+		component.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+			public void mouseReleased(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+			private void showMenu(MouseEvent e) {
+				popup.show(e.getComponent(), e.getX(), e.getY());
+			}
+		});
+	}
 }
