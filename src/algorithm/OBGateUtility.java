@@ -21,7 +21,7 @@ import java.util.Map.Entry;
 public class OBGateUtility {
 	
 	 static List gateOrder(Map inputOrder) { // 对输入的字典内订单进行符合要素的筛选，挑出满足一个门区的订单
-		double gateArea = 10.0; // 设定单位门区面积
+		double gateArea = 2.0; // 设定单位门区面积
 		Set set = inputOrder.entrySet();
 		Iterator it = set.iterator(); // 设置迭代器
 		List<String> orderList = new ArrayList<String>(); // 空列表

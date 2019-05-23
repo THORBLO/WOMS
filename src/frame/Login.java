@@ -218,7 +218,7 @@ public class Login extends WebFrame {
             		if (managerRadio.isSelected()) {
             			role = "manager";
                     	if(loginStatus(name, pw, role)) {
-                        	dispose();
+                        	//dispose();
                         	Mframe mframe = new Mframe(name);
                         	mframe.setVisible(true);
                     	} else {
@@ -228,10 +228,30 @@ public class Login extends WebFrame {
             		else if (storeRadio.isSelected()) {
             			role = "store";
                     	if(loginStatus(name, pw, role)) {
-                        	dispose();
+                        	//dispose();
                         	StoreFrame storeframe = new StoreFrame(name);
                         	storeframe.setVisible(true);
                     	} else {
+                    		WebOptionPane.showMessageDialog(contentPane, "用户名或密码错误！");
+    					}
+            		}
+            		else if (supplierRadio.isSelected()) {
+            			role = "supplier";
+            			if (loginStatus(name, pw, role)) {
+            				//dispose();
+                        	SupplierFrame supplierframe = new SupplierFrame(name);
+                        	supplierframe.setVisible(true);
+            			} else {
+                    		WebOptionPane.showMessageDialog(contentPane, "用户名或密码错误！");
+    					}
+            		}
+            		else if (staffRadio.isSelected()) {
+            			role = "operator";
+            			if (loginStatus(name, pw, role)) {
+            				//dispose();
+                        	OperatorFrame operatorFrame = new OperatorFrame();
+                        	operatorFrame.setVisible(true);
+            			} else {
                     		WebOptionPane.showMessageDialog(contentPane, "用户名或密码错误！");
     					}
             		}

@@ -17,7 +17,7 @@ import com.google.gson.reflect.TypeToken;
 
 public class PreInform {
 	
-	static void inform () {
+	static void inform (String judge) {
 		
 		//获取当日的规划，解码成List格式后，进行插入数据库操作
 		
@@ -38,7 +38,7 @@ public class PreInform {
                         "root", "admin");
 				Statement stmt = conn.createStatement();) 
 		{
-			String sql = "SELECT * FROM ob_plan WHERE plan_date = '" + sdf.format(date) + "'";
+			String sql = "SELECT * FROM " + judge + " WHERE plan_date = '" + sdf.format(date) + "'";
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
 				underOperate = rs.getString(3);
@@ -50,11 +50,11 @@ public class PreInform {
 		Gson gson = new Gson();
 		List<List<String>> list = gson.fromJson(underOperate, new TypeToken<List<List<String>>>(){}.getType());
 		
-		addToDB(list);
+		addToDB(list, judge);
 		
 	}
 	
-	static void addToDB (List<List<String>> list) {
+	static void addToDB (List<List<String>> list, String judge) {
 		
 		Date date = getDate();
 		long time = 30*60*1000;
@@ -68,7 +68,12 @@ public class PreInform {
 			for (int j = 0; j < singleList.size(); j++) {
 				
 				Date predate = new Date(date.getTime() + time*j);
-				insertToDB(singleList.get(j), i+1, sdf.format(predate));			
+				if (judge == "ob_plan") {
+					insertToDB(singleList.get(j), i+1, sdf.format(predate));	
+				} else {
+					insertToDBIN(singleList.get(j), i+1, sdf.format(predate));
+				}
+						
 			}
 			
 		}
@@ -98,11 +103,32 @@ public class PreInform {
 		
 	}
 	
+	static void insertToDBIN (String order, int gate, String predate) {
+		
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		try (
+				Connection conn = DriverManager.getConnection(
+                        "jdbc:mysql://127.0.0.1:3306/woms?useSSL=false&serverTimezone=UTC",
+                        "root", "admin");
+				Statement stmt = conn.createStatement();) 
+		{
+			String sql = "INSERT INTO in_inform(inin_order, inin_gate, inin_predate) VALUES('" + order + "', '" + gate + "', '" + predate + "')";
+			stmt.execute(sql);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 	static String getStore (String order) {
 		
 		String store = null;
-		int mile;
-		String onWayTime = null;
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");

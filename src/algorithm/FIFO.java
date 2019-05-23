@@ -63,9 +63,10 @@ public class FIFO {
 		return backList;
 	}
 	
-	static List<List<String>> allFifo (Map<Integer, Map<String, String>> map) {
+	static List<List<String>> allFifo (Map<Integer, Map<String, String>> map, String radio) {
 		
 		//先将Map中所有门区转换成列表，再按门区顺序存入上一级列表，将整个规划列表转换成json格式，存入数据库
+		
 		
 		List<List<String>> list = new ArrayList<List<String>>();
 		
@@ -93,7 +94,7 @@ public class FIFO {
                         "root", "admin");
 				Statement stmt = conn.createStatement();) 
 		{
-			String sql = "INSERT INTO ob_plan(plan_date, plan_prim) VALUES('" + sdf.format(date) + "', '" + finalList + "')";
+			String sql = "INSERT INTO " + radio + "(plan_date, plan_prim) VALUES('" + sdf.format(date) + "', '" + finalList + "')";
 			stmt.execute(sql);
 			
 		} catch (SQLException e) {
